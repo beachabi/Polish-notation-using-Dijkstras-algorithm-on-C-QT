@@ -1,5 +1,5 @@
 # Polish-notation-using-Dijkstras-algorithm-on-C-QT
-C - advance calculatorm using Dextra's algorithm and polish notation with QT
+C - advance calculator using Dijkstra's algorithm and polish notation with QT
 
 
 ### Polish notation and reverse Polish notation
