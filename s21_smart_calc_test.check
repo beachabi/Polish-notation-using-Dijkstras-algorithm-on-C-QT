@@ -1,0 +1,125 @@
+#include "s21_smart_calc.h"
+
+
+
+//! === PARSE_STRING ===
+
+#test parse_string_1
+    ck_assert_double_eq(parse_string("1 + 2"), 3);
+#test parse_string_2
+    ck_assert_double_eq(parse_string("1 - 2"), -1);
+#test parse_string_3
+    ck_assert_double_eq(parse_string("1 * 2"), 2);
+
+#test parse_string_3_1
+    ck_assert_double_eq(parse_string("1.25 * 2"), 2.5);
+
+#test parse_string_4
+    ck_assert_double_eq(parse_string("1 / 2"), 0.5);
+
+#test parse_string_5
+    ck_assert_double_eq(parse_string("2 ^ 3"), 8);
+
+#test parse_string_6
+    double test = sin(9); 
+    ck_assert_double_eq(parse_string("SIN(9)"), test);
+
+#test parse_string_7
+    double test = tan(9) + 1; 
+    ck_assert_double_eq(parse_string("TAN(9) + 1"), test);
+
+#test parse_string_8
+    double test = tan(9) + sin(10 + cos(10)); 
+    ck_assert_double_eq(parse_string("TAN(9) + SIN(10 + COS(10))"), test);
+
+
+#test parse_string_9
+    double test = tan(9) + sin(10 + cos(10)) + sqrt(9); 
+    ck_assert_double_eq(parse_string("TAN(9) + SIN(10 + COS(10)) + SQRT(9)"), test);
+
+
+#test parse_string_10
+    double test = tan(9) + sin(10 + cos(10)) + sqrt(9) * asin(sin(10)); 
+    ck_assert_double_eq(parse_string("TAN(9) + SIN(10 + COS(10)) + SQRT(9) * ASIN(SIN(10))"), test);
+
+
+#test parse_string_11
+    double test = log(1); 
+    ck_assert_double_eq(parse_string("LN(1)"), test);
+
+#test parse_string_12
+    double test = log10(1); 
+    ck_assert_double_eq(parse_string("LOG(1)"), test);
+
+#test parse_string_13
+    double test = atan(1); 
+    ck_assert_double_eq(parse_string("ATAN(1)"), test);
+
+//! === ERROR_DOT ===
+
+#test error_dot_1
+    ck_assert_int_eq(error_dot("1..2"), 1);
+    ck_assert_int_eq(error_dot(".2"), 1);
+    ck_assert_int_eq(error_dot("2."), 1);
+
+
+
+//! === error_math ===
+
+#test error_math_1
+    ck_assert_double_eq(error_math("X"), 0);
+    ck_assert_double_eq(error_math("1 + "), 1);
+    ck_assert_double_eq(error_math("1 - "), 1);
+    ck_assert_double_eq(error_math("COS("), 1);
+    ck_assert_double_eq(error_math("XX"), 0);
+
+
+//! === back_last_symb ===
+
+#test back_last_symb_1
+    ck_assert_str_eq(back_last_symb("1234 "), "123");
+    ck_assert_str_eq(back_last_symb("asddd "), "");
+    ck_assert_str_eq(back_last_symb("1234 + "), "1234");
+    ck_assert_str_eq(back_last_symb("1234 cos("), "1234");
+    ck_assert_str_eq(back_last_symb("((("), "((");
+
+//! === open_br ===
+
+#test open_br_1
+    ck_assert_int_eq(open_br("1234"), 0);
+    ck_assert_int_eq(open_br("1234 + "), 1);
+    ck_assert_int_eq(open_br("COS("), 0);
+    ck_assert_int_eq(open_br("1234 -"), 1);
+    ck_assert_int_eq(open_br("1234 2 2 "), 0);
+
+
+
+//! === close_br ===
+
+#test close_br_1
+    ck_assert_int_eq(close_br("("), 0);
+    ck_assert_int_eq(close_br("1234 + "), 0);
+    ck_assert_int_eq(close_br("COS("), 0);
+    ck_assert_int_eq(close_br("1234 -"), 0);
+    ck_assert_int_eq(close_br("1234 2 2 "), 0);
+    ck_assert_int_eq(close_br("(()"), 1);
+
+
+
+//! === print_X_in_line ===
+
+#test print_X_in_line_1
+    ck_assert_int_eq(print_X_in_line("(ad ww X"), 1);
+    ck_assert_int_eq(print_X_in_line("(ad ww X d12"), 0);
+    ck_assert_int_eq(print_X_in_line("(ad ww X12 "), 0);
+    ck_assert_int_eq(print_X_in_line("(ad ww "), 1);
+    
+
+//! === check_X_in_line ===
+
+#test check_X_in_line_1
+    ck_assert_int_eq(check_for_X("(ad ww X"), 1);
+    ck_assert_int_eq(check_for_X("(ad ww X d12"), 1);
+    ck_assert_int_eq(check_for_X("(ad ww X12 "), 1);
+    ck_assert_int_eq(check_for_X("(ad ww "), 0);
+    

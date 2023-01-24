@@ -1,0 +1,265 @@
+#include "smart_calc.h"
+#include "ui_smart_calc.h"
+
+smart_calc::smart_calc(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::smart_calc)
+{
+//    setlocale(LC_ALL, "");
+//    setlocale(LC_ALL, "en_US.UTF-8");
+    ui->setupUi(this);
+    connect(ui->Button_0, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_1, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_2, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_3, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_4, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_5, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_6, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_7, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_8, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+    connect(ui->Button_9, SIGNAL(clicked()), this, SLOT(digits_numbers()));
+
+    connect(ui->bADD, SIGNAL(clicked()), this, SLOT(easy_math()));
+    connect(ui->bSUB, SIGNAL(clicked()), this, SLOT(easy_math()));
+    connect(ui->bMUL, SIGNAL(clicked()), this, SLOT(easy_math()));
+    connect(ui->bDIV, SIGNAL(clicked()), this, SLOT(easy_math()));
+
+
+    connect(ui->point, SIGNAL(clicked()), this, SLOT(print_point()));
+
+
+
+
+
+//    connect(ui->bSQRT, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bSIN, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bCOS, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bASIN, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bACOS, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bTAN, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bATAN, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bLOG, SIGNAL(clicked()), this, SLOT(trigonometry()));
+//    connect(ui->bLN, SIGNAL(clicked()), this, SLOT(trigonometry()));
+
+}
+
+smart_calc::~smart_calc()
+{
+    delete ui;
+}
+
+
+void smart_calc:: digits_numbers(){
+    QPushButton *button = (QPushButton*)(sender());
+    ui->lineEdit->insert(button->text());
+}
+
+
+void smart_calc:: print_point(){
+
+//    QPushButton *button = (QPushButton*)(sender());
+//    QString string_for_check = button->text();
+
+    char *string_for_check_c = ui->lineEdit->text().toLocal8Bit().data();
+
+    if (ui->lineEdit->text() != "") {
+        if (error_dot(string_for_check_c)) {}
+               else { ui->lineEdit->insert(".");}
+    }
+}
+
+
+
+void smart_calc:: easy_math() {
+
+
+    QPushButton *button = (QPushButton*)(sender());
+    QString line_edit =  ui->lineEdit->text();
+    char *string_for_check_c = line_edit.toLocal8Bit().data();
+    char *sym_for_check_c = button->text().toLocal8Bit().data();
+
+
+
+    if (ui->lineEdit->text() != "") {
+        if (error_math(sym_for_check_c, string_for_check_c)) {}
+               else { ui->lineEdit->insert(" + ");}
+
+}
+
+
+
+    //    QString to_string;
+
+
+//    }
+
+//    QString test = "1 + 2";
+
+
+//    QString test = ui->lineEdit->text();
+
+//    QString str;
+//    str.setNum(parse_string(c_test));
+
+//    ui->lineEdit->insert(str);
+}
+
+
+
+
+//void smart_calc::on_Button_1_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_1->text());
+//}
+//void smart_calc::on_Button_2_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_2->text());
+//}
+//void smart_calc::on_Button_3_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_3->text());
+//}
+//void smart_calc::on_Button_4_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_4->text());
+//}
+//void smart_calc::on_Button_5_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_5->text());
+//}
+//void smart_calc::on_Button_6_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_6->text());
+//}
+//void smart_calc::on_Button_7_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_7->text());
+//}
+//void smart_calc::on_Button_8_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_8->text());
+//}
+//void smart_calc::on_Button_9_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_9->text());
+//}
+//void smart_calc::on_Button_0_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_0->text());
+//}
+
+//void smart_calc::on_EQUAL_clicked()
+//{
+//    ui->lineEdit->insert(ui->Button_0->text());
+//}
+
+
+//void smart_calc::on_point_clicked()
+//{
+//    ui->lineEdit->insert(ui->point->text());
+//}
+
+
+//void smart_calc::on_ADD_clicked()
+//{
+//    ui->lineEdit->insert(ui->ADD->text());
+//}
+
+//void smart_calc::on_SUB_clicked()
+//{
+//    ui->lineEdit->insert(ui->SUB->text());
+//}
+
+
+//void smart_calc::on_MUL_clicked()
+//{
+//    ui->lineEdit->insert(ui->MUL->text());
+//}
+
+
+//void smart_calc::on_DIV_clicked()
+//{
+//    ui->lineEdit->insert(ui->DIV->text());
+//}
+
+
+//void smart_calc::on_SQR_clicked()
+//{
+//    ui->lineEdit->insert(ui->SQR->text());
+//}
+
+
+//void smart_calc::on_SQRT_clicked()
+//{
+//    ui->lineEdit->insert(ui->SQRT->text());
+//}
+
+
+//void smart_calc::on_SIN_clicked()
+//{
+//    ui->lineEdit->insert(ui->SIN->text());
+//}
+
+
+//void smart_calc::on_COS_clicked()
+//{
+//    ui->lineEdit->insert(ui->COS->text());
+//}
+
+
+//void smart_calc::on_ASIN_clicked()
+//{
+//    ui->lineEdit->insert(ui->ASIN->text());
+//}
+
+
+//void smart_calc::on_ACOS_clicked()
+//{
+//    ui->lineEdit->insert(ui->ACOS->text());
+//}
+
+
+//void smart_calc::on_TAN_clicked()
+//{
+//    ui->lineEdit->insert(ui->TAN->text());
+//}
+
+
+//void smart_calc::on_ATAN_clicked()
+//{
+//    ui->lineEdit->insert(ui->ATAN->text());
+//}
+
+
+//void smart_calc::on_LOG_clicked()
+//{
+//    ui->lineEdit->insert(ui->LOG->text());
+//}
+
+
+//void smart_calc::on_LN_clicked()
+//{
+//    ui->lineEdit->insert(ui->LN->text());
+//}
+
+
+//void smart_calc::on_OPEN_clicked()
+//{
+//    ui->lineEdit->insert(ui->OPEN->text());
+//}
+
+
+
+//void smart_calc::on_CLOSE_clicked()
+//{
+//    ui->lineEdit->insert(ui->CLOSE->text());
+//}
+
+
+
+
+//void smart_calc::on_UNAR_MIN_clicked()
+//{
+//    ui->lineEdit->insert("-");
+//}
+
